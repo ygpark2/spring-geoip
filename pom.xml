@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.otherlevels</groupId>
+	<artifactId>ol-geoip</artifactId>
+	<name>ol-geoip</name>
+	<packaging>war</packaging>
+	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<description>A service to provice json interface for ip enquiry to return country code</description>
+	<url>http://otherlevels.com</url>
+	<inceptionYear>2013</inceptionYear>
+
+	<prerequisites>
+		<maven>3.0.3</maven>
+	</prerequisites>
+
+	<properties>
+		<java.version>1.6</java.version>
+
+		<servlet.api.version>3.0.1</servlet.api.version>
+		<jsp.api.version>2.1</jsp.api.version>
+		<jstl.version>1.2</jstl.version>
+		<validation.version>1.0.0.GA</validation.version>
+
+		<!-- <org.springframework.version>3.1.2.RELEASE</org.springframework.version> -->
+		<org.springframework.version>3.2.2.RELEASE</org.springframework.version>
+		<org.aspectj.version>1.7.1.RELEASE</org.aspectj.version>
+		<cglib.version>2.2.2</cglib.version>
+
+		<mysql-connector-java.version>5.1.21</mysql-connector-java.version>
+
+		<junit.version>4.10</junit.version>
+		<mockito.version>1.9.5-rc1</mockito.version>
+		<hamcrest-all.version>1.3</hamcrest-all.version>
+		<spring-test-mvc.version>1.0.0.M2</spring-test-mvc.version>
+
+		<logback.version>1.0.7</logback.version>
+		<slf4j.version>1.7.0</slf4j.version>
+
+		<google-guava.version>13.0.1</google-guava.version>
+		<joda-time.version>2.1</joda-time.version>
+
+		<jackson-mapper-asl.version>1.9.9</jackson-mapper-asl.version>
+
+		<tiles.version>2.2.2</tiles.version>
+
+		<spring.data.jpa.version>1.2.0.RELEASE</spring.data.jpa.version>
+
+		<hibernate.version>3.6.10.Final</hibernate.version>
+		<!-- <hibernate.version>4.1.7.Final</hibernate.version> -->
+		<hibernate.jmx.version>3.5.6-Final</hibernate.jmx.version>
+		<hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
+		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
+		<!-- <jackson-datatype-hibernate4.version>2.1.1</jackson-datatype-hibernate4.version> -->
+		<jackson-datatype-hibernate3.version>2.1.1</jackson-datatype-hibernate3.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	</properties>
+
+	<developers>
+		<developer>
+			<id>yg.park</id>
+			<name>Young Gyu Park</name>
+			<email>yg.park@otherlevels.com</email>
+			<url>http://www.otherlevels.com/</url>
+			<organization>Otherlevels</organization>
+			<organizationUrl>http://www.otherlevels.com/</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>Otherlevels</name>
+		<url>http://www.otherlevels.com/</url>
+	</organization>
+
+	<scm>
+		<connection>scm:git:git@github.com:genedelisa/spring-mvc3-javaconfig.git</connection>
+		<url>scm:git:git@github.com:genedelisa/spring-mvc3-javaconfig.git</url>
+		<developerConnection>scm:git:git@github.com:genedelisa/spring-mvc3-javaconfig.git</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>Bugzilla</system>
+		<url>http://rocco/~gene/bugzilla/</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<!-- using @Configuration -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+
+		<!-- logback imports slf4j -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- org.springframework.context.support.AbstractApplicationContext needs 
+			commons logging. slf4j fixes that. <dependency> <groupId>commons-logging</groupId> 
+			<artifactId>commons-logging</artifactId> <version>1.1</version> </dependency> -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<!-- 2.5 name -->
+			<!-- <artifactId>servlet-api</artifactId> -->
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson-mapper-asl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${validation.version}</version>
+		</dependency>
+
+
+		<!-- Test -->
+
+		<!-- junit imports hamcrest but not all the matchers -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${hamcrest-all.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>${hamcrest-all.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc</artifactId>
+			<version>${spring-test-mvc.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- DB -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.jpa.version}</version>
+		</dependency>
+
+		<!-- ORM via Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm-attrs</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jmx</artifactId>
+			<version>${hibernate.jmx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>${hibernate.jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- misc -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${google-guava.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>com.fasterxml.jackson.datatype</groupId>
+		  <artifactId>jackson-datatype-hibernate3</artifactId>
+		  <version>${jackson-datatype-hibernate3.version}</version>
+		</dependency>
+	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-maven-release</id>
+			<name>Spring Maven Release Repository</name>
+			<url>http://maven.springframework.org/release</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-maven-milestone</id>
+			<name>Spring Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring.maven.snapshot</id>
+			<name>Spring Snapshot Repository</name>
+			<url>http://maven.springframework.org/snapshot</url>
+		</pluginRepository>
+
+		<!-- tomcat plugin -->
+		<pluginRepository>
+			<id>apache.snapshots</id>
+			<name>Apache Snapshots</name>
+			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>spring.maven.release</id>
+			<name>Spring Release Repository</name>
+			<url>http://maven.springframework.org/release</url>
+		</repository>
+		<repository>
+			<id>spring.maven.milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>
+		<repository>
+			<id>spring.maven.snapshot</id>
+			<name>Spring Snapshot Repository</name>
+			<url>http://maven.springframework.org/snapshot</url>
+		</repository>
+		<!-- JBoss repo only needed for Spring Security Dependency of com.sun.xml.wsit:xws-security:jar:1.3.1 
+			<repository> <id>jboss.repository.releases.public</id> <name>JBoss Repo Public</name> 
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss</url> 
+			</repository> -->
+
+		<repository>
+			<id>jboss.repository.releases.public</id>
+			<name>JBoss Repo releases</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+		</repository>
+
+		<repository>
+			<id>glassfish</id>
+			<name>glassfish</name>
+			<url>http://download.java.net/maven/glassfish/org/glassfish/</url>
+		</repository>
+
+	</repositories>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+					<!-- generate line numbers for the debugger -->
+					 <debug>true</debug>
+					 <debuglevel>none</debuglevel>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>com.rockhoppertech.example.Main</mainClass>
+				</configuration>
+			</plugin>
+
+			<!-- When using xml-less approach, you need to disable Maven's warning about missing web.xml -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>

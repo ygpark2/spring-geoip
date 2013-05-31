@@ -1,0 +1,8 @@
+
+dataSource.driverClassName=com.mysql.jdbc.Driver
+dataSource.url=jdbc:mysql://192.168.0.203:3306/Test2
+dataSource.username=root
+dataSource.password=oladmin
+
+hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+hibernate.hbm2ddl.auto=update

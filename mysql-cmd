@@ -1,0 +1,42 @@
+mysql -u <user> -p<password> --local-infile <database>
+mysql5 -h 192.168.0.203 -u root -poladmin --local-infile Test2
+
+CREATE TABLE GeoLiteCityLocation (
+	id BIGINT NOT NULL,
+	areaCode INT,
+	city VARCHAR(250),
+	country VARCHAR(2) NOT NULL,
+	latitude FLOAT NOT NULL,
+	longitude FLOAT NOT NULL,
+	metroCode INT,
+	postalCode VARCHAR(50) NOT NULL,
+	region VARCHAR(2),
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE GeoLiteCityBlock (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	endIpNum BIGINT NOT NULL,
+	startIpNum BIGINT NOT NULL,
+	geoLiteCityLoc_id BIGINT,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE INDEX FKF573C923F9BC2F31 ON GeoLiteCityBlock (geoLiteCityLoc_id ASC);
+CREATE INDEX ipNumIdx ON GeoLiteCityBlock (`endIpNum`, `startIpNum`);
+
+# ALTER TABLE `GeoLiteCityBlock` ADD INDEX `ipNumIdx` (`endIpNum`, `startIpNum`);
+
+LOAD DATA LOCAL INFILE 'GeoLiteCity_20130305/GeoLiteCity-Location.csv' INTO TABLE GeoLiteCityLocation
+    FIELDS TERMINATED BY ',' ENCLOSED BY '"' ESCAPED BY '\\'
+    LINES TERMINATED BY '\n'
+    (id, country, region, city, postalCode, latitude, longitude, metroCode, areaCode);
+
+LOAD DATA LOCAL INFILE 'GeoLiteCity_20130305/GeoLiteCity-Blocks.csv' INTO TABLE GeoLiteCityBlock
+    FIELDS TERMINATED BY ',' ENCLOSED BY '"' ESCAPED BY '\\'
+    LINES TERMINATED BY '\n'
+    (startIpNum, endIpNum, geoLiteCityLoc_id);
+
+GeoLiteCityLocation data should be inserted before GeoLiteCityBlock, since GeoLiteCityLocation is referred by GeoLiteCityBlock.
+
